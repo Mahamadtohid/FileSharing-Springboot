@@ -50,7 +50,7 @@
     <div class="uploaded-files-container">
         <h2 class="uploaded-files-title">Uploaded Files</h2>
 
-        <!-- <div class="table-wrapper" th:classappend="${files.size() > 4} ? 'scroll-enabled' : ''"> -->
+        <div class="table-wrapper" th:classappend="${files.size() > 4} ? 'scroll-enabled' : ''"> 
         <div class="table-wrapper">
             <table class="uploaded-files-table">
                 <thead>
@@ -62,7 +62,7 @@
                     </tr>
                 </thead>
                 <tbody id="fileTableBody">
-                    <!-- <tr th:each="file : ${files}">
+                    <tr th:each="file : ${files}">
                         <td th:text="${file.fileName}">File Name</td>
                         <td th:text="${file.uploadedBy}">Uploaded By</td>
                         <td>
@@ -75,10 +75,10 @@
                                 <button type="submit" class="delete-button"><i class="fas fa-trash-alt"></i></button>
                             </form>
                         </td>
-                    </tr> -->
+                    </tr>
 
                     <!-- Static sample row -->
-                    <tr>
+                    {% comment %} <tr>
                         <td>example.pdf</td>
                         <td>John Doe</td>
                         <td>
@@ -91,12 +91,12 @@
                                 <button type="submit" class="delete-button"><i class="fas fa-trash-alt"></i></button>
                             </form>
                         </td>
-                    </tr>
+                    </tr> {% endcomment %}
                 </tbody>
             </table>
         </div>
 
-        <!-- <div class="scroll-indicator" th:if="${files.size() > 4}">Scroll to see more files</div> -->
+        <div class="scroll-indicator" th:if="${files.size() > 4}">Scroll to see more files</div>
         <div class="scroll-indicator">Scroll to see more files</div>
     </div>
 </div>

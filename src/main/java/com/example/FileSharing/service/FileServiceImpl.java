@@ -4,16 +4,20 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.Optional;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.example.FileSharing.Entity.FileEntity;
+import com.example.FileSharing.exception.FileNotFoundException;
 import com.example.FileSharing.model.FileModel;
 import com.example.FileSharing.repository.FileRepository;
 
+@Service
 public class FileServiceImpl implements FileService{
 
     @Autowired
@@ -52,13 +56,27 @@ public class FileServiceImpl implements FileService{
     @Override
     public ResponseEntity<?> shareFile(int id) throws IOException {
         // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'shareFile'");
+        Optional <FileEntity> entity = fileRepository.findById(id);
+        if(entity.isPresent()){
+            // FileModel model = ;
+            return ResponseEntity.ok().body(convertToModel(entity.get()));
+        }else{
+            throw new FileNotFoundException("File not found with id: ");
+        }
+
     }
 
     @Override
     public ResponseEntity<?> deleteFile(int id) throws IOException {
+
+        Optional <FileEntity> entity = fileRepository.findById(id);
+        if(entity.isPresent()){
+            fileRepository.delete(entity.get());
+            return ResponseEntity.ok().body("File deleted successfully with id: " + id);
+        }else{
+            throw new FileNotFoundException("File not found");
+        }
         // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'deleteFile'");
     }
     
 }
