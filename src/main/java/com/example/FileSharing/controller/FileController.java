@@ -25,7 +25,7 @@ public class FileController {
 
     @GetMapping("/share")
     public String share() {
-        return "share-files";
+        return "share-file";
     }
     
     

@@ -2,16 +2,23 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Share File</title>
-    <link rel="icon" type="image/png" th:href="@{images/file-sharing.png}">
-    <link th:href="@{/styles/css/share-files.css}" rel="stylesheet" />
+    <!-- <link rel="icon" type="image/png" th:href="@{images/file-sharing.png}"> -->
+    <link rel="icon" type="image/png" href="images/file-sharing.png">
+    <!-- <link th:href="@{/styles/css/share-files.css}" rel="stylesheet" /> -->
+    <link href="/styles/css/share-files.css" rel="stylesheet" />
 </head>
 <body>
+
 <div class="container">
     <div class="box download-box">
         <h1>Download Your File</h1>
-        <p>File Name: <span th:text="${file.fileName}"></span></p>
-        <p>Uploaded By: <span th:text="${file.uploadedBy}"></span></p>
-        <form th:action="@{/files/download/{id}(id=${file.id})}">
+        <!-- <p>File Name: <span th:text="${file.fileName}"></span></p> -->
+        <p>File Name: <span>example.pdf</span></p>
+        <!-- <p>Uploaded By: <span th:text="${file.uploadedBy}"></span></p> -->
+        <p>Uploaded By: <span>John Doe</span></p>
+
+        <!-- <form th:action="@{/files/download/{id}(id=${file.id})}"> -->
+        <form action="#">
             <button type="submit" class="download-button">
                 <i class="fas fa-download"></i> Download File
             </button>
@@ -20,7 +27,8 @@
 
     <div class="box share-box">
         <h2>Share This Page</h2>
-        <p>URL: <input type="text" id="shareUrl" th:value="${shareUrl}" readonly/></p>
+        <!-- <p>URL: <input type="text" id="shareUrl" th:value="${shareUrl}" readonly/></p> -->
+        <p>URL: <input type="text" id="shareUrl" value="https://example.com/shared-file-link" readonly /></p>
         <button class="copy-button" onclick="copyToClipboard()">
             <i class="fas fa-copy"></i> Copy URL
         </button>
@@ -38,5 +46,6 @@
         alert("URL copied to clipboard: " + copyText.value);
     }
 </script>
+
 </body>
 </html>
