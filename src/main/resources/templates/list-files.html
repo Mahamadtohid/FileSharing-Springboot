@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -28,7 +28,7 @@
 <div class="main-container">
     <div class="upload-container">
         <h2 class="upload-title">Upload Your File</h2>
-        <form action="/files/upload" method="post" enctype="multipart/form-data" class="upload-form" id="uploadForm">
+        <form action= "@{/files/upload}" method="post" enctype="multipart/form-data" class="upload-form" id="uploadForm">
             <div class="drag-drop-area" id="dragDropArea">
                 <i class="fas fa-cloud-upload-alt upload-icon"></i>
                 <p>Drag & Drop your file here or</p>
@@ -50,8 +50,8 @@
     <div class="uploaded-files-container">
         <h2 class="uploaded-files-title">Uploaded Files</h2>
 
-        <div class="table-wrapper" th:classappend="${files.size() > 4} ? 'scroll-enabled' : ''"> 
-        <div class="table-wrapper">
+        <div class="table-wrapper" th:classappend="${files.size() > 4} ? 'scroll-enabled' : ''">
+         <div class="table-wrapper">
             <table class="uploaded-files-table">
                 <thead>
                     <tr>
@@ -61,9 +61,9 @@
                         <th>Delete File</th>
                     </tr>
                 </thead>
-                <tbody id="fileTableBody">
+               <tbody id="fileTableBody">
                     <tr th:each="file : ${files}">
-                        <td th:text="${file.fileName}">File Name</td>
+                        <td th:text="${file.filename}">File Name</td>
                         <td th:text="${file.uploadedBy}">Uploaded By</td>
                         <td>
                             <form th:action="@{/files/share/{id}(id=${file.id})}">
@@ -76,22 +76,6 @@
                             </form>
                         </td>
                     </tr>
-
-                    <!-- Static sample row -->
-                    {% comment %} <tr>
-                        <td>example.pdf</td>
-                        <td>John Doe</td>
-                        <td>
-                            <form action="#">
-                                <button type="submit" class="share-button"><i class="fas fa-share-alt"></i></button>
-                            </form>
-                        </td>
-                        <td>
-                            <form action="#" method="post">
-                                <button type="submit" class="delete-button"><i class="fas fa-trash-alt"></i></button>
-                            </form>
-                        </td>
-                    </tr> {% endcomment %}
                 </tbody>
             </table>
         </div>

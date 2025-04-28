@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 
 @Controller
-@RequestMapping()
+@RequestMapping("/files")
 public class FileController {
 
     @Autowired
@@ -36,15 +36,15 @@ public class FileController {
     @PostMapping("/upload")
     public String postMethodName(@RequestParam("file") MultipartFile file, @RequestParam("uploadedBy") String uploadedBy) throws IOException {
         fileService.uploadFile(file, uploadedBy);
-        return "redirect:/"; // Redirect to the index page after upload
+        return "redirect:/files/home"; // Redirect to the index page after upload
     }
     
 
-    @GetMapping("/")
+    @GetMapping("/home")
     public String index(Model model) {
-        model.addAttribute("files", fileService.getAllFiles());
-        return "list-files"; // 
-    }
+    model.addAttribute("files", fileService.getAllFiles());
+    return "list-files";
+}
 
     @GetMapping("/share/{id}")
     public String shareFile(@PathVariable int id, Model model) throws IOException {
@@ -58,7 +58,7 @@ public class FileController {
 
             return "share-file"; // Return the view name for sharing the file
         }else{
-            return "redirect:/"; // Redirect to the index page if file not found
+            return "redirect:/files/home"; // Redirect to the index page if file not found
         }
 
     }
