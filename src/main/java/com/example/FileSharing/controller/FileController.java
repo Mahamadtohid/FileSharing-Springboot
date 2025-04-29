@@ -64,10 +64,15 @@ public class FileController {
     }
 
     @PostMapping("/delete/{id}")
-    public ResponseEntity<?> deleteFile(@PathVariable int id) throws IOException {
+    public String deleteFile(@PathVariable int id) throws IOException {
         
-        return fileService.deleteFile(id);
-         // Redirect to the index page after deletion
+        ResponseEntity <?> file = fileService.deleteFile(id);
+        if(file.hasBody()){
+            return "redirect:/files/home" ;
+        }else{
+            return "redirect:/files" ;
+        }
+         
     }
     
 

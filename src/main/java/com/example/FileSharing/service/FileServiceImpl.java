@@ -8,7 +8,9 @@ import java.util.Optional;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.server.reactive.HttpHandler;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -77,6 +79,19 @@ public class FileServiceImpl implements FileService{
             throw new FileNotFoundException("File not found");
         }
         // TODO Auto-generated method stub
+    }
+
+    @Override
+    public ResponseEntity<?> getFile(int id) throws IOException {
+        
+        Optional<FileEntity> entity = fileRepository.findById(id);
+        if(entity.isPresent()){
+            FileEntity fileEntity = entity.get();
+            FileModel fileModel = new FileModel();
+            BeanUtils.copyProperties(fileEntity, fileModel);
+            return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + fileEntity.getFilename() + "\"").body(fileModel.getFileData());
+                    
+        }
     }
     
 }
