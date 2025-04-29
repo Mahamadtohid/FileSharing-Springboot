@@ -12,10 +12,10 @@
 <div class="container">
     <div class="box download-box">
         <h1>Download Your File</h1>
-         <p>File Name: <span th:text="${file.fileName}"></span></p> 
-        <p>File Name: <span>example.pdf</span></p>
+         <p>File Name: <span th:text="${file.filename}"></span></p> 
+         <!-- <p>File Name: <span>example.pdf</span></p> -->
          <p>Uploaded By: <span th:text="${file.uploadedBy}"></span></p> 
-        <p>Uploaded By: <span>John Doe</span></p>
+        <!-- <p>Uploaded By: <span>John Doe</span></p> -->
 
          <form th:action="@{/files/download/{id}(id=${file.id})}"> 
         <form action="#">

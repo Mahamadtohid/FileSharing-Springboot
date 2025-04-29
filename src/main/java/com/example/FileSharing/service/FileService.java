@@ -16,6 +16,7 @@ public interface FileService {
     public ResponseEntity<?> shareFile(int id) throws IOException;
     public ResponseEntity<?> deleteFile(int id) throws IOException;
     public ResponseEntity<?> getFile(int id) throws IOException;
+    public void deleteExpiredFiles();
 
     
 }

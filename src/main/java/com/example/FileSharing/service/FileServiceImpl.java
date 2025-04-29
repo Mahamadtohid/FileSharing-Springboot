@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.server.reactive.HttpHandler;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -78,7 +79,6 @@ public class FileServiceImpl implements FileService{
         }else{
             throw new FileNotFoundException("File not found");
         }
-        // TODO Auto-generated method stub
     }
 
     @Override
@@ -91,7 +91,19 @@ public class FileServiceImpl implements FileService{
             BeanUtils.copyProperties(fileEntity, fileModel);
             return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + fileEntity.getFilename() + "\"").body(fileModel.getFileData());
                     
+        }else{
+            throw new FileNotFoundException("File not found with id: " + id);
         }
     }
-    
+
+    @Override
+    @Scheduled(cron = "0 0 * * * *") // Run daily at midnight
+    public void deleteExpiredFiles() {
+        List<FileEntity> expiredFiles = fileRepository.findByExpiryTimeBefore(LocalDateTime.now());
+        expiredFiles.forEach(fileRepository::delete);
+        System.out.println("Files Automatic deleted Successfully..." + LocalDateTime.now());
+        }
+        
 }
+    
+

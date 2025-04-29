@@ -46,22 +46,18 @@ public class FileController {
     return "list-files";
 }
 
-    @GetMapping("/share/{id}")
-    public String shareFile(@PathVariable int id, Model model) throws IOException {
-
-        ResponseEntity<?> fileModel = fileService.shareFile(id);
-
-        if(fileModel.hasBody()){
-
-            String currentUrl = ServletUriComponentsBuilder.fromCurrentRequest().toUriString();
-            model.addAttribute("shareUri", currentUrl);
-
-            return "share-file"; // Return the view name for sharing the file
-        }else{
-            return "redirect:/files/home"; // Redirect to the index page if file not found
-        }
-
+@GetMapping("/share/{id}")
+public String shareFile(@PathVariable int id, Model model) throws IOException {
+    ResponseEntity<?> fileModel = fileService.shareFile(id);
+    if (fileModel.hasBody()) {
+        model.addAttribute("file", fileModel.getBody());
+        String currentUrl = ServletUriComponentsBuilder.fromCurrentRequest().toUriString();
+        model.addAttribute("shareUrl", currentUrl);
+        return "share-file";
+    } else {
+        return "redirect:/files/home";
     }
+}
 
     @PostMapping("/delete/{id}")
     public String deleteFile(@PathVariable int id) throws IOException {
@@ -80,6 +76,12 @@ public class FileController {
     public String share() {
         return "share-file";
     }
+
+    @GetMapping("/download/{id}")
+    public ResponseEntity<?> downloadFile(@PathVariable int id) throws IOException {
+        return fileService.getFile(id);
+    }
+    
     
     
 }
